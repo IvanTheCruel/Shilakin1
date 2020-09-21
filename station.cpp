@@ -8,5 +8,5 @@ station::station():id(sId++){
 }
 
 station::~station(){
-    std::cout<<"good_bye\n";
+    std::cout<<"s:"<<id<<std::endl;
 }

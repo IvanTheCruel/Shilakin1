@@ -6,7 +6,8 @@ CONFIG -= qt
 SOURCES += \
         main.cpp \
     pipe.cpp \
-    station.cpp
+    station.cpp \
+    check_idiot.cpp
 
 HEADERS += \
     pipe.h \

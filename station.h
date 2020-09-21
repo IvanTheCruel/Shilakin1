@@ -1,4 +1,5 @@
 #pragma once
+
 #include <check_idiot.h>
 
 struct ITC::station

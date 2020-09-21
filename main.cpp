@@ -9,6 +9,8 @@ int main()
     ITC::pipe Pipe_0;
     ITC::pipe Pipe_1;
     ITC::station Station;
+    vector<string> a = {"wwww","dwa","aa"};
+    ITC::check_idiot(a, "test");
 
     return 0;
 }

@@ -1,7 +1,7 @@
 #include <check_idiot.h>
 using namespace std;
 
-void ITC::check_idiot(vector<string> a, string name_element){
+string ITC::check_idiot(vector<string> a, string name_element){
 
     cout << "Enter " << name_element << "(";
     for (size_t i = 0; i < a.size(); i++) {
@@ -25,7 +25,7 @@ void ITC::check_idiot(vector<string> a, string name_element){
         cout << "ERROR: wrong value!\n";
         ITC::check_idiot(a, name_element); //если пользователь все же идиот, просим его ввести еще раз
     } else {
-        return;
+        return temp; //верни значение пользователя
     }
 }
 
@@ -64,5 +64,7 @@ bool ITC::is_double_or_int(string str){
     Dbl = Dbl && amount_points < 2;
     return Dbl;
 }
+
+//ITC::std::vector<std::string> yes = {"Y","N","y","n","yes","no","oui"};
 
 

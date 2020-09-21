@@ -10,5 +10,7 @@ namespace ITC {
     struct pipe;
     struct station;
     void check_idiot(std::vector<std::string>, std::string);
+    float check_idiot(std::string);
+    bool is_double_or_int(std::string);
 }
 

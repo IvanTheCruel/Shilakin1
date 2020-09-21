@@ -10,7 +10,7 @@ int main()
     ITC::pipe Pipe_1;
     ITC::station Station;
     vector<string> a = {"wwww","dwa","aa"};
-    ITC::check_idiot(a, "test");
+    ITC::check_idiot("test");
 
     return 0;
 }

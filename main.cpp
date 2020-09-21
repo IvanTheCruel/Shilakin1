@@ -6,7 +6,9 @@ using namespace std;
 int main()
 {
     cout << "Hello World!" << endl;
-    pipe Pipe;
-    station Station;
+    ITC::pipe Pipe_0;
+    ITC::pipe Pipe_1;
+    ITC::station Station;
+
     return 0;
 }

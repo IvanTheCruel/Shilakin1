@@ -1,10 +1,12 @@
 #include <station.h>
+using namespace ITC;
 
-station::station(){
+int station::sId = 0;
+
+station::station():id(sId++){
 
 }
 
 station::~station(){
     std::cout<<"good_bye\n";
-
 }

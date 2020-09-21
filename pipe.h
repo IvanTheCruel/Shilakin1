@@ -1,9 +1,13 @@
 #pragma once
 
-struct pipe
+#include <check_idiot.h>
+
+struct ITC::pipe
 {
 public:
-    static int id;
+    static int sId;
+    int id;
+
     float length, diameter;
     bool under_repair = false;
 

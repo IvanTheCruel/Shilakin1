@@ -1,12 +1,11 @@
 #pragma once
+#include <check_idiot.h>
 
-#include <string>
-#include <iostream>
-
-struct station
+struct ITC::station
 {
 public:
-    static int id;
+    static int sId;
+    int id;
 
     std::string name;
     static int quantity;

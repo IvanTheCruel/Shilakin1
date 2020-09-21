@@ -1,5 +1,10 @@
 #include <pipe.h>
+using namespace ITC;
 
-pipe::pipe(){}
+int pipe::sId = 0;
 
-pipe::~pipe(){}
+pipe::pipe():id(sId++){}
+
+pipe::~pipe(){
+    std::cout<<id<<std::endl;
+}

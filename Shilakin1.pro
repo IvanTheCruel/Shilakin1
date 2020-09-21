@@ -10,4 +10,5 @@ SOURCES += \
 
 HEADERS += \
     pipe.h \
-    station.h
+    station.h \
+    check_idiot.h

@@ -3,7 +3,7 @@ using namespace std;
 
 string ITC::check_idiot(vector<string> a, string name_element){
 
-    cout << "Enter " << name_element << "(";
+    cout << name_element << "(";
     for (size_t i = 0; i < a.size(); i++) {
         cout << a[i];
         if(i+1 < a.size()) cout << "/";
@@ -23,7 +23,7 @@ string ITC::check_idiot(vector<string> a, string name_element){
 
     if(idiot){
         cout << "ERROR: wrong value!\n";
-        ITC::check_idiot(a, name_element); //если пользователь все же идиот, просим его ввести еще раз
+        return ITC::check_idiot(a, name_element); //если пользователь все же идиот, просим его ввести еще раз
     } else {
         return temp; //верни значение пользователя
     }
@@ -42,10 +42,20 @@ float ITC::check_idiot(string name_element){
 
     if(idiot){
         cout << "ERROR: wrong value!\n";
-        ITC::check_idiot(name_element); //если пользователь все же идиот, просим его ввести еще раз
+        return ITC::check_idiot(name_element); //если пользователь все же идиот, просим его ввести еще раз
     } else {
         return stof(temp);
     }
+}
+
+bool ITC::check_ans(std::string q){
+    bool tans = false;
+    std::string ans = ITC::check_idiot(ITC::yes, q);
+    for (size_t i = 0; i < ITC::yes.size(); i) {
+        if (ITC::yes[i] == ans) tans = true;
+        i+=2; //каждый четный элемент это правда
+    }
+    return tans;
 }
 
 

@@ -14,24 +14,50 @@ pipe::pipe(bool change):pipe::pipe(){
     else {
         length=check_idiot("length");
         diameter=check_idiot("diameter");
-        std::string a = check_idiot(ITC::yes,"under repair");
-        for (size_t i = 0; i < ITC::yes.size(); i) {
-            if (ITC::yes[i] == a) under_repair = true;
-            i+=2; //каждый четный элемент это правда
-        }
+
+        under_repair = ITC::check_ans("under repair?");
+
         return;
     }
 }
+
+pipe::pipe(std::string link, int _id):id(sId++){
+    std::ifstream fin(link);
+    if (fin.is_open()) {
+        using namespace std;
+        string str;
+
+        getline(fin, str, '|');//взяли id первого
+        while(stoi(str)!=_id && !fin.eof()){ //продолжаем проверять id пока не найдем нужный или найдем конец конец файла
+            getline(fin, str); //пропускам не нужную строку
+            getline(fin, str, '|'); //опять берем id
+
+        }
+
+        getline(fin, str, '|');
+        length=stof(str);
+        getline(fin, str, '|');
+        diameter=stof(str);
+        getline(fin, str, '|');
+        if (str == "y") under_repair=true;
+        else under_repair=false;
+
+        fin.close();
+    }
+    else {
+        std::cout << "ERROR: invalid file name!";
+    }
+    return;
+}
+
 
 
 void pipe::set(){
     length=check_idiot("length");
     diameter=check_idiot("diameter");
-    std::string a = check_idiot(ITC::yes,"under repair");
-    for (size_t i = 0; i < ITC::yes.size(); i) {
-        if (ITC::yes[i] == a) under_repair = true;
-        i+=2; //каждый четный элемент это правда
-    }
+
+    under_repair = ITC::check_ans("under repair?");
+
     return;
 }
 
@@ -40,16 +66,31 @@ int pipe::get_id() const{
     return id;
 }
 
+int pipe::get_max_id(){
+    return pipe::sId;
+}
+
 pipe::~pipe(){
     std::cout<<"pipe id"<<id<<" is destructured"<<std::endl;
 }
 
-std::ostream& operator<<(std::ostream& os, const pipe& mypipe)
-{
+std::ostream& operator<<(std::ostream& os, const pipe& mypipe){
+
     std::string temp = "is";
     if (!mypipe.under_repair) temp = "not";
     os << "\npipe id" << mypipe.get_id()
        << "\n"+temp+" under repair\nlength:\t\t" << mypipe.length
        << "\ndiameter:\t"<< mypipe.diameter << "\n\n";
     return os;
+}
+
+std::ofstream& operator<<(std::ofstream& ofs, const pipe& mypipe){
+
+    using namespace std;
+    string a = "n";
+    if (mypipe.under_repair) a = "y";
+    string ans = to_string(mypipe.get_id())+"|"+to_string(mypipe.length)
+            +"|"+to_string(mypipe.diameter)+"|"+a+"|\n";
+    ofs << ans;
+    return ofs;
 }

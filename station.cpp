@@ -16,50 +16,91 @@ station::station(bool change):station::station(){
     if (!change) return;
     else {
         std::cout << "name station\n";
-        std::cin.ignore(); //иначе getline считывал \n и не давал ввести имя
-        getline(std::cin,name);
+        //std::cin.ignore(1000, '\n'); //иначе getline считывал \n и не давал ввести имя
+        //getline(std::cin,name); //нашел баг и убил
+
+        std::string temp = ""; char tempch =' ';
+        std::cin>>tempch;
+        while(std::cin.peek() != '\n'){
+
+            temp.push_back(tempch);
+            std::cin>>tempch;
+        }
+        name = temp;
+
         efficiency = check_idiot("efficiency");
-        std::string a = check_idiot(ITC::yes,"if this station in work?");
-        for (size_t i = 0; i < ITC::yes.size(); i) {
-            if (ITC::yes[i] == a) {
-                quantity_in_work++;
-                me_in_work = true;
-            }
-            i+=2; //каждый четный элемент это правда
+
+        if (ITC::check_ans("if this station in work?")) {
+            quantity_in_work++;
+            me_in_work = true;
         }
     }
     return;
 }
 
+station::station(std::string link, int _id):id(sId++){
+    std::ifstream fin(link);
+    if (fin.is_open()) {
+        using namespace std;
+        string str;
+
+        getline(fin, str, '|');//взяли id первого
+        while(stoi(str)!=_id && !fin.eof()){ //продолжаем проверять id пока не найдем нужный или найдем конец конец файла
+            getline(fin, str); //пропускам не нужную строку
+            getline(fin, str, '|'); //опять берем id
+
+        }
+        quantity++;
+        getline(fin, name, '|');
+
+        getline(fin, str, '|');
+        efficiency=stof(str);
+
+        getline(fin, str, '|');
+        if (str == "y") {
+            me_in_work=true;
+            quantity_in_work++;
+        }
+        else me_in_work=false;
+
+        fin.close();
+    }
+    else {
+        std::cout << "ERROR: invalid file name!\n";
+    }
+    return;
+}
+
+
+
+
 int station::get_id() const{
     return id;
 }
 
+int station::get_max_id(){
+    return station::sId;
+}
+
 void station::set(){
     std::cout << "name station\n";
-    std::cin.ignore(); //иначе getline считывал \n и не давал ввести имя
-    getline(std::cin,name);
-    efficiency = check_idiot("efficiency");
 
-    std::string ans = check_idiot(ITC::yes,"if this station in work?");
-    if (!me_in_work) {
-        for (size_t i = 0; i < ITC::yes.size(); i) {
-            if (ITC::yes[i] == ans && !me_in_work) {
-                quantity_in_work++;
-                me_in_work = true;
-                break;
-            }
-            i+=2; //каждый четный элемент это правда
-        }
-    } else {
-        for (size_t i = 1; i < ITC::yes.size(); i) {
-            if (ITC::yes[i] == ans) {
-                quantity_in_work--;
-                me_in_work = false;
-                break;
-            }
-            i+=2; //каждый нечетный элемент это неправда
-        }
+    std::string temp = ""; char tempch;
+
+    while(std::cin.peek() != '\n'){
+        std::cin>>tempch;
+        temp.push_back(tempch);
+    }
+    name = temp;
+
+    efficiency = check_idiot("efficiency");
+    bool tbool = ITC::check_ans("if this station in work?");
+    if (tbool && !me_in_work) {
+        quantity_in_work++;
+        me_in_work = true;
+    } else if (!tbool && me_in_work) {
+        quantity_in_work--;
+        me_in_work = false;
     }
     return;
 }
@@ -91,8 +132,8 @@ station::~station(){
 }
 
 
-std::ostream& operator<<(std::ostream& os, const station& my_st)
-{
+std::ostream& operator<<(std::ostream& os, const station& my_st){
+
     std::string temp = "is";
     if (!my_st.me_in_work) temp = "not";
     os << "\nstation id" << my_st.get_id() << " 'called "+ my_st.name
@@ -101,3 +142,15 @@ std::ostream& operator<<(std::ostream& os, const station& my_st)
        << "\nstations in work:\t"<< my_st.quantity_in_work << "\n\n";
     return os;
 }
+
+std::ofstream& operator<<(std::ofstream& ofs, const station& my_st){
+
+    using namespace std;
+    string a = "n";
+    if (my_st.me_in_work) a = "y";
+    string ans = to_string(my_st.get_id())+"|"+my_st.name+"|"
+            +to_string(my_st.efficiency)+"|"+a+"|\n";
+    ofs << ans;
+    return ofs;
+}
+

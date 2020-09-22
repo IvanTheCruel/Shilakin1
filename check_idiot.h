@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 
 
@@ -11,6 +12,7 @@ namespace ITC {
     struct station;
     const std::vector<std::string> yes = {"y","n"};//,"Y","N","yes","no","oui","nope"};
     std::string check_idiot(std::vector<std::string>, std::string);
+    bool check_ans(std::string);
     float check_idiot(std::string);
     bool is_double_or_int(std::string);
 }

@@ -16,16 +16,19 @@ public:
     bool me_in_work = false;
 
     int get_id() const;
+    static int get_max_id();
     void set();
     void on();
     void off();
 
     station();
     station(bool);
+    station(std::string);
+    station(std::string, int);
     ~station();
 };
 
 std::ostream& operator<<(std::ostream&, const ITC::station&);
 //аналогично pipe
-
+std::ofstream& operator<<(std::ofstream&, const ITC::station&);
 

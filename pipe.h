@@ -17,13 +17,16 @@ public:
     bool under_repair = false;
 
     int get_id() const; //узнал проблему почему нельзя вывести значение в оператор здесь https://stackoverflow.com/questions/5973427/error-passing-xxx-as-this-argument-of-xxx-discards-qualifiers
+    static int get_max_id();
     void set();
 
     pipe();
     pipe(bool);
+    pipe(std::string, int);
     ~pipe();
 };
 
 
 std::ostream& operator<<(std::ostream&, const ITC::pipe&);
 //по какой-то причине комплилятор отказывает в использовании этого оператора, если он friend внутри struct и сам struct в namespace('ошибка: undefined reference to `ITC::operator<<(std::ostream&, ITC::pipe const&)')
+std::ofstream& operator<<(std::ofstream&, const ITC::pipe&);

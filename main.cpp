@@ -5,23 +5,74 @@ using namespace std;
 
 int main(){
     using namespace ITC;
-    pipe p1;
-    pipe p2(true);
+//    setlocale(0, "");
+//    pipe p1;
+//    pipe p2(true);
 
-    station s1(true);
-    station s2(false);
-    station s3(false);
+//    station s1(true);
+//    station s2(false);
+//    station s3(false);
 
-    //cout << p1 << p2 << s1 << s2 << s3;
-    s2.on();
-    cout << s2;
+//    //cout << p1 << p2 << s1 << s2 << s3;
+//    s2.on();
+//    cout << s2;
 
-    ofstream fout("pipes.txt");
-    fout << p1;
-    cout << p1;
-    fout.close();
-    pipe p3("pipes.txt",0);
-    cout << p3;
+//    ofstream fout("pipes.txt");
+//    fout << p1;
+//    cout << p1;
+//    fout.close();
+//    pipe p3("pipes.txt",0);
+//    cout << p3;
+
+    vector<pipe> pipes;
+    vector<station> stations;
+    vector<string> q = {"1","2","3","4","5","6","7","0"};
+    vector<string> q2 = {"add pipe","add station","see all","edit pipe","edit station","save","load","exit"};
+    cout<<"options: ";
+    for (size_t i = 0; i < q.size(); i++){
+        cout<<q[i]+'-'+q2[i]+", ";
+    }
+    cout<<endl;
+    while(true){
+        string ans = check_idiot(q, "choose option");
+        int id = 0;
+        switch(ans[0])
+        {
+        case '1':
+            pipes.emplace_back();
+            break;
+        case '2':
+            stations.emplace_back();
+            break;
+        case '3':
+            for (size_t i = 0; i < pipes.size(); i++) {
+                cout << pipes[i];
+            }
+            for (size_t i = 0; i < stations.size(); i++) {
+                cout << stations[i];
+            }
+            break;
+        case '4':
+            id = check_idiot("enter ID");
+            pipes[id].set();
+            break;
+        case '5':
+            id = check_idiot("enter ID");
+            stations[id].set();
+            break;
+        case '6':
+
+            break;
+        case '7':
+
+            break;
+        case '0':
+
+            break;
+        }
+
+    }
+
 
 
     /*vector<pipe> pipes;

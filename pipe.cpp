@@ -8,6 +8,7 @@ pipe::pipe():id(sId++){
     diameter = 2.5;
 }
 
+
 pipe::pipe(bool change):pipe::pipe(){
     if (!change) return;
     else {
@@ -27,7 +28,8 @@ pipe::~pipe(){
     std::cout<<"p:"<<id<<std::endl;
 }
 
-const int pipe::get_id(){
+
+int pipe::get_id() const{
     return id;
 }
 
@@ -35,5 +37,5 @@ const int pipe::get_id(){
 std::ostream& operator<<(std::ostream& os, const pipe& mypipe)
 {
     os << mypipe.get_id();
-    return os;//itos(
+    return os;
 }

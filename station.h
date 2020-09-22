@@ -16,6 +16,10 @@ public:
     bool me_in_work = false;
 
     int get_id() const;
+    void set();
+    void on();
+    void off();
+
     station();
     station(bool);
     ~station();

@@ -15,7 +15,9 @@ private:
 public:
     float length, diameter;
     bool under_repair = false;
+
     int get_id() const; //узнал проблему почему нельзя вывести значение в оператор здесь https://stackoverflow.com/questions/5973427/error-passing-xxx-as-this-argument-of-xxx-discards-qualifiers
+    void set();
 
     pipe();
     pipe(bool);

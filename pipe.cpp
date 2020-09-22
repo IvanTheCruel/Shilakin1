@@ -25,7 +25,7 @@ pipe::pipe(bool change):pipe::pipe(){
 
 
 pipe::~pipe(){
-    std::cout<<"p:"<<id<<std::endl;
+    std::cout<<"pipe id"<<id<<" is destructured"<<std::endl;
 }
 
 
@@ -36,6 +36,10 @@ int pipe::get_id() const{
 
 std::ostream& operator<<(std::ostream& os, const pipe& mypipe)
 {
-    os << mypipe.get_id();
+    std::string temp = "is";
+    if (!mypipe.under_repair) temp = "not";
+    os << "\npipe id" << mypipe.get_id()
+       << "\n"+temp+" under repair\nlength:\t\t" << mypipe.length
+       << "\ndiameter:\t"<< mypipe.diameter << "\n\n";
     return os;
 }

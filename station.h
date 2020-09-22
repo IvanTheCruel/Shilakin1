@@ -4,16 +4,24 @@
 
 struct ITC::station
 {
-public:
+private:
     static int sId;
     int id;
-
+public:
     std::string name;
     static int quantity;
     static int quantity_in_work;
     float efficiency;
-    bool under_repair = false;
+    //bool under_repair = false;
+    bool me_in_work = false;
 
+    int get_id() const;
     station();
+    station(bool);
     ~station();
 };
+
+std::ostream& operator<<(std::ostream&, const ITC::station&);
+//аналогично pipe
+
+

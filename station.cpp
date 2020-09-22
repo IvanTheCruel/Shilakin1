@@ -37,6 +37,8 @@ int station::get_id() const{
 
 station::~station(){
     std::cout<<"station id"<<id<<" is destructured"<<std::endl;
+    if (me_in_work) quantity_in_work--;
+    quantity--;
 }
 
 std::ostream& operator<<(std::ostream& os, const station& my_st)

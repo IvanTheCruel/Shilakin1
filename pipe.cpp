@@ -72,6 +72,11 @@ int pipe::get_max_id(){
     return pipe::sId;
 }
 
+void pipe::kill_sId(){
+    pipe::sId = 0;
+    return;
+}
+
 pipe::~pipe(){
     std::cout<<"pipe id"<<id<<" is destructured"<<std::endl;
 }

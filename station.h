@@ -17,6 +17,7 @@ public:
 
     int get_id() const;
     static int get_max_id();
+    static void kill_sId();
     void set();
     void on();
     void off();

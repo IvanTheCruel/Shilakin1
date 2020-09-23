@@ -18,6 +18,7 @@ public:
 
     int get_id() const; //узнал проблему почему нельзя вывести значение в оператор здесь https://stackoverflow.com/questions/5973427/error-passing-xxx-as-this-argument-of-xxx-discards-qualifiers
     static int get_max_id();
+    static void kill_sId();
     void set();
 
     pipe();

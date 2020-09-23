@@ -58,7 +58,6 @@ bool ITC::check_ans(std::string q){
     return tans;
 }
 
-
 bool ITC::check_id(std::string link, int _id){
     using namespace std;
     ifstream fin;

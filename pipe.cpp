@@ -22,16 +22,16 @@ pipe::pipe(bool change):pipe::pipe(){
 }
 
 pipe::pipe(std::string link, int _id):id(sId++){
-    std::ifstream fin(link);
-    if (fin.is_open()) {
-        using namespace std;
-        string str;
+    using namespace std;
+    ifstream fin;
+    string str;
 
+    if (check_id(link,_id)) {
+        fin.open(link);
         getline(fin, str, '|');//взяли id первого
         while(stoi(str)!=_id && !fin.eof()){ //продолжаем проверять id пока не найдем нужный или найдем конец конец файла
             getline(fin, str); //пропускам не нужную строку
             getline(fin, str, '|'); //опять берем id
-
         }
 
         getline(fin, str, '|');
@@ -45,7 +45,9 @@ pipe::pipe(std::string link, int _id):id(sId++){
         fin.close();
     }
     else {
-        std::cout << "ERROR: invalid file name!";
+        cout<<"ID not found! Founded basic pipe instead\n";
+        length = 100;
+        diameter = 2.5;
     }
     return;
 }

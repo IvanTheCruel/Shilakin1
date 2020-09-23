@@ -31,4 +31,5 @@ public:
 std::ostream& operator<<(std::ostream&, const ITC::station&);
 //аналогично pipe
 std::ofstream& operator<<(std::ofstream&, const ITC::station&);
+std::ifstream& operator>>(std::ifstream&, ITC::station&);
 

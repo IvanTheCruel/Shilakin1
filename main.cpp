@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
     using namespace ITC;
-//    setlocale(0, "");
+/*    setlocale(0, "");
 //    pipe p1;
 //    pipe p2(true);
 
@@ -22,20 +22,27 @@ int main(){
 //    cout << p1;
 //    fout.close();
 //    pipe p3("pipes.txt",0);
-//    cout << p3;
+//    cout << p3; */
 
     vector<pipe> pipes;
     vector<station> stations;
     vector<string> q = {"1","2","3","4","5","6","7","0"};
     vector<string> q2 = {"add pipe","add station","see all","edit pipe","edit station","save","load","exit"};
+    int id = 0; bool cnt = true;
+    string ans;
+    ofstream fout;
+    ifstream fin;
+
     cout<<"options: ";
     for (size_t i = 0; i < q.size(); i++){
         cout<<q[i]+'-'+q2[i]+", ";
     }
     cout<<endl;
-    while(true){
-        string ans = check_idiot(q, "choose option");
-        int id = 0;
+
+    while(cnt){
+
+        ans = check_idiot(q, "choose option");
+
         switch(ans[0])
         {
         case '1':
@@ -58,16 +65,30 @@ int main(){
             break;
         case '5':
             id = check_idiot("enter ID");
-            stations[id].set();
+            if(check_ans("want to edit all parameters?"))
+                stations[id].set();
+            else if (check_ans("is station on?"))
+                stations[id].on();
+            else
+                stations[id].off();
             break;
         case '6':
-
+            fout.open("stations.txt");
+            for (size_t i = 0; i < stations.size(); i++) {
+                fout << stations[i];
+            }
+            fout.close();
+            fout.open("pipes.txt");
+            for (size_t i = 0; i < pipes.size(); i++) {
+                fout << pipes[i];
+            }
+            fout.close();
             break;
         case '7':
 
             break;
         case '0':
-
+            cnt = false;
             break;
         }
 

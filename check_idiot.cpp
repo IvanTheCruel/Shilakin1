@@ -59,6 +59,44 @@ bool ITC::check_ans(std::string q){
 }
 
 
+bool ITC::check_id(std::string link, int _id){
+    using namespace std;
+    ifstream fin;
+    string str;
+    bool id_is_real = false;
+
+    int num_rows = ITC::max_row(link);
+
+    fin.open(link);
+    for(int i = 0; i < num_rows && !id_is_real; i++) {
+        getline(fin, str, '|'); //берем id
+        id_is_real = stoi(str)==_id; //id существует, если он есть в файл
+        getline(fin, str);  //пропускам не нужную строку
+    }
+    fin.close();
+
+    return id_is_real;
+}
+
+int ITC::max_row(std::string link){
+    using namespace std;
+    ifstream fin(link);
+
+    if(fin.is_open()){
+        int num_rows = 0;
+
+        string trash;
+        while (getline(fin, trash)) num_rows++;
+        fin.close();
+
+        return num_rows;
+    }
+    else {
+        cout << "ERROR: invalid file name!\n";
+        return 0;
+    }
+}
+
 bool ITC::is_double_or_int(string str){
     bool Dbl = true;
     int amount_points = 0;
@@ -67,8 +105,8 @@ bool ITC::is_double_or_int(string str){
     for (size_t i = 0; i < str.length() && Dbl && amount_points < 2; i++){
 //        find_char = !isdigit(str[i]) || (!(i != 0 && i != str.length()) && (str[i] == '.' || str[i] == ','));
 //        if (find_char) Dbl = false;
-        Dbl = isdigit(str[i]) || ((i != 0 && i != str.length()-1) && (str[i] == '.' || str[i] == ','));
-        if (str[i] == '.' || str[i] == ',') amount_points++;
+        Dbl = isdigit(str[i]) || ((i != 0 && i != str.length()-1) && str[i] == '.');
+        if (str[i] == '.') amount_points++;
         //проверяем число на отстутствие букв и несколько точек
     }
     Dbl = Dbl && amount_points < 2;

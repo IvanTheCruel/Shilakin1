@@ -39,16 +39,16 @@ station::station(bool change):station::station(){
 }
 
 station::station(std::string link, int _id):id(sId++){
-    std::ifstream fin(link);
-    if (fin.is_open()) {
-        using namespace std;
-        string str;
+    using namespace std;
+    string str;
+    ifstream fin;
 
+    if(check_id(link,_id)) { //если нашли id, то считываем данные
+        fin.open(link);
         getline(fin, str, '|');//взяли id первого
         while(stoi(str)!=_id && !fin.eof()){ //продолжаем проверять id пока не найдем нужный или найдем конец конец файла
             getline(fin, str); //пропускам не нужную строку
             getline(fin, str, '|'); //опять берем id
-
         }
         quantity++;
         getline(fin, name, '|');
@@ -64,9 +64,12 @@ station::station(std::string link, int _id):id(sId++){
         else me_in_work=false;
 
         fin.close();
-    }
-    else {
-        std::cout << "ERROR: invalid file name!\n";
+    } else {
+        cout<<"ID not found! Founded basic station instead\n";
+        name="basic station "+to_string(id);
+        efficiency =  78.22;
+        quantity++;
+        return;
     }
     return;
 }

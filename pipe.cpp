@@ -21,34 +21,27 @@ pipe::pipe(bool change):pipe::pipe(){
     }
 }
 
-pipe::pipe(std::string link, int _id):id(sId++){
+pipe::pipe(std::ifstream& ifs):id(sId++){
     using namespace std;
     ifstream fin;
     string str;
 
-    if (check_id(link,_id)) {
-        fin.open(link);
-        getline(fin, str, '|');//взяли id первого
-        while(stoi(str)!=_id && !fin.eof()){ //продолжаем проверять id пока не найдем нужный или найдем конец конец файла
-            getline(fin, str); //пропускам не нужную строку
-            getline(fin, str, '|'); //опять берем id
-        }
 
-        getline(fin, str, '|');
-        length=stof(str);
-        getline(fin, str, '|');
-        diameter=stof(str);
-        getline(fin, str, '|');
-        if (str == "y") under_repair=true;
-        else under_repair=false;
+    getline(ifs, str, '|');//взяли id
 
-        fin.close();
-    }
-    else {
-        cout<<"ID not found! Founded basic pipe instead\n";
-        length = 100;
-        diameter = 2.5;
-    }
+    getline(ifs, str, '|');
+    length=stod(str);
+
+    getline(ifs, str, '|');
+    diameter=stod(str);
+
+    getline(ifs, str, '|');
+    if (str == ITC::yes[0]) under_repair=true;
+    else under_repair=false;
+//    cout<<str;
+//    getline(ifs, str, '|');
+//    cout<<str;
+
     return;
 }
 
@@ -94,8 +87,8 @@ std::ostream& operator<<(std::ostream& os, const pipe& mypipe){
 std::ofstream& operator<<(std::ofstream& ofs, const pipe& mypipe){
 
     using namespace std;
-    string a = "n";
-    if (mypipe.under_repair) a = "y";
+    string a = ITC::yes[1];
+    if (mypipe.under_repair) a = ITC::yes[0];
     string ans = to_string(mypipe.get_id())+"|"+to_string(mypipe.length)
             +"|"+to_string(mypipe.diameter)+"|"+a+"|\n";
     ofs << ans;

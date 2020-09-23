@@ -16,17 +16,10 @@ station::station(bool change):station::station(){
     if (!change) return;
     else {
         std::cout << "name station(no whitespaces)\n";
-        //std::cin.ignore(1000, '\n'); //иначе getline считывал \n и не давал ввести имя
-        //getline(std::cin,name); //нашел баг и убил
 
-        std::string temp; //char tempch =' ';
+        std::string temp;
         std::cin>>temp;
 
-//        while(std::cin.peek() != '\n'){
-//            std::cin>>tempch;
-//            temp.push_back(tempch);
-
-//        }
         name = temp;
 
         efficiency = check_idiot("efficiency");
@@ -39,44 +32,28 @@ station::station(bool change):station::station(){
     return;
 }
 
-station::station(std::string link, int _id):id(sId++){
+station::station(std::ifstream& ifs):id(sId++){
     using namespace std;
     string str;
-    ifstream fin;
+
     quantity++;
 
-    if(check_id(link,_id)) { //если нашли id, то считываем данные
-        fin.open(link);
-        getline(fin, str, '|');//взяли id первого
-        while(stoi(str)!=_id && !fin.eof()){ //продолжаем проверять id пока не найдем нужный или найдем конец конец файла
-            getline(fin, str); //пропускам не нужную строку
-            getline(fin, str, '|'); //опять берем id
-        }
+    getline(ifs, str, '|');//взяли id
 
-        getline(fin, name, '|');
+    getline(ifs, name, '|');
 
-        getline(fin, str, '|');
-        efficiency=stof(str);
+    getline(ifs, str, '|');
+    efficiency=stod(str);
 
-        getline(fin, str, '|');
-        if (str == "y") {
-            me_in_work=true;
-            quantity_in_work++;
-        }
-        else me_in_work=false;
-
-        fin.close();
-    } else {
-        cout<<"ID not found! Founded basic station instead\n";
-        name="basic station "+to_string(id);
-        efficiency =  78.22;
-
-        return;
+    getline(ifs, str, '|');
+    if (str == ITC::yes[0]) {
+        me_in_work=true;
+        quantity_in_work++;
     }
+    else me_in_work=false;
+
     return;
 }
-
-
 
 
 int station::get_id() const{
@@ -97,17 +74,10 @@ void station::kill_sId(){
 
 void station::set(){
     std::cout << "name station(no whitespaces)\n";
-    //std::cin.ignore(1000, '\n'); //иначе getline считывал \n и не давал ввести имя
-    //getline(std::cin,name); //нашел баг и убил
 
-    std::string temp; //char tempch =' ';
+    std::string temp;
     std::cin>>temp;
 
-//        while(std::cin.peek() != '\n'){
-//            std::cin>>tempch;
-//            temp.push_back(tempch);
-
-//        }
     name = temp;
 
     efficiency = check_idiot("efficiency");
@@ -161,8 +131,8 @@ std::ostream& operator<<(std::ostream& os, const station& my_st){
 std::ofstream& operator<<(std::ofstream& ofs, const station& my_st){
 
     using namespace std;
-    string a = "n";
-    if (my_st.me_in_work) a = "y";
+    string a = ITC::yes[1]; //n
+    if (my_st.me_in_work) a = ITC::yes[0];
     string ans = to_string(my_st.get_id())+"|"+my_st.name+"|"
             +to_string(my_st.efficiency)+"|"+a+"|\n";
     ofs << ans;
@@ -177,10 +147,10 @@ std::ifstream& operator>>(std::ifstream& ifs, ITC::station& my_st){
     getline(ifs, my_st.name, '|');//дали имя
 
     getline(ifs, str, '|');
-    my_st.efficiency=stof(str);
+    my_st.efficiency=stod(str);
 
     getline(ifs, str, '|');
-    if (str == "y") {
+    if (str == ITC::yes[0]) {
         my_st.on();
     } else {
         my_st.off();

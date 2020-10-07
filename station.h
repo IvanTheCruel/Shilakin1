@@ -2,7 +2,7 @@
 
 #include <check_idiot.h>
 
-struct ITC::station
+class ITC::station
 {
 private:
     static int sId;
@@ -11,7 +11,7 @@ public:
     std::string name;
     static int quantity;
     static int quantity_in_work;
-    float efficiency;
+    double efficiency;
     //bool under_repair = false;
     bool me_in_work = false;
 
@@ -24,8 +24,7 @@ public:
 
     station();
     station(bool);
-    station(std::string);
-    station(std::string, int);
+    station(std::ifstream&);
     ~station();
 };
 

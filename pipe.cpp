@@ -23,7 +23,6 @@ pipe::pipe(bool change):pipe::pipe(){
 
 pipe::pipe(std::ifstream& ifs):id(sId++){
     using namespace std;
-    ifstream fin;
     string str;
 
 
@@ -89,8 +88,11 @@ std::ofstream& operator<<(std::ofstream& ofs, const pipe& mypipe){
     using namespace std;
     string a = ITC::yes[1];
     if (mypipe.under_repair) a = ITC::yes[0];
-    string ans = to_string(mypipe.get_id())+"|"+to_string(mypipe.length)
+    string ans = "P" + to_string(mypipe.get_id())+"|"+to_string(mypipe.length)
             +"|"+to_string(mypipe.diameter)+"|"+a+"|\n";
+    if(mypipe.get_id()==mypipe.get_max_id()-1){
+        ans = ans+"\pend";
+    }
     ofs << ans;
     return ofs;
 }

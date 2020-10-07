@@ -15,6 +15,7 @@ int main(){
     string ans, tl;
     char test='/';
     ofstream fout;
+
     ifstream fin;
 
     cout<<"options: ";
@@ -64,12 +65,10 @@ int main(){
                 stations[id].off();
             break;
         case '6':
-            fout.open("stations.txt");
+            fout.open("newbase.txt");
             for (size_t i = 0; i < stations.size(); i++) {
                 fout << stations[i];
             }
-            fout.close();
-            fout.open("pipes.txt");
             for (size_t i = 0; i < pipes.size(); i++) {
                 fout << pipes[i];
             }

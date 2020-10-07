@@ -6,7 +6,7 @@ int station::quantity = 0;
 int station::quantity_in_work = 0;
 
 station::station():id(sId++){
-    name="basic station "+std::to_string(id);
+    name="basic_station_"+std::to_string(id);
     efficiency =  78.22;
     quantity++;
     return;
@@ -133,7 +133,7 @@ std::ofstream& operator<<(std::ofstream& ofs, const station& my_st){
     using namespace std;
     string a = ITC::yes[1]; //n
     if (my_st.me_in_work) a = ITC::yes[0];
-    string ans = to_string(my_st.get_id())+"|"+my_st.name+"|"
+    string ans = "S"+to_string(my_st.get_id())+"|"+my_st.name+"|"
             +to_string(my_st.efficiency)+"|"+a+"|\n";
     ofs << ans;
     return ofs;
@@ -142,6 +142,7 @@ std::ofstream& operator<<(std::ofstream& ofs, const station& my_st){
 std::ifstream& operator>>(std::ifstream& ifs, ITC::station& my_st){
     using namespace std;
     string str;
+
     getline(ifs, str, '|');//взяли id первого
 
     getline(ifs, my_st.name, '|');//дали имя

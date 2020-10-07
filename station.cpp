@@ -113,7 +113,7 @@ void station::off(){
 
 
 station::~station(){
-    std::cout<<"station id"<<id<<" is destructured"<<std::endl;
+    //std::cout<<"station id"<<id<<" is destructured"<<std::endl;
 }
 
 

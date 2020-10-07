@@ -13,7 +13,6 @@ int main(){
     vector<string> temp = {"1","0"};
     size_t id = 0; bool cnt = true;
     string ans, tl;
-    char test='/';
     ofstream fout;
 
     ifstream fin;
@@ -75,31 +74,23 @@ int main(){
             fout.close();
             break;
         case '7':
-            fin.open("pipes.txt");
+            fin.open("newbase.txt");
             if (fin.is_open()){
-                if("delete_old" == check_idiot(temp,"add new from file to exisiting or delete old?")){
-                    pipes.clear();
-                    stations.clear();
-                    pipe::kill_sId();
-                    station::kill_sId();
+                char t;
+                string temp;
+                pipes.clear();
+                stations.clear();
+                pipe::kill_sId();
+                station::kill_sId();
+                fin >> t;
+                while(t != 'e'){
+                    if (t=='S') {
+                        stations.emplace_back(fin);
+                    } else if (t=='P') {
+                        pipes.emplace_back(fin);
+                    }
+                    fin >> t;
                 }
-                while(!fin.eof()){
-                    pipes.emplace_back(fin);
-//                    cout<<fin.eof();
-//                    pipes.emplace_back(fin);
-//                    cout<<fin.eof();
-
-
-//          getline(fin,tl);
-//                    cout<<tl;
-
-
-
-                }
-//                while(!fin.eof( )){
-//                    if (fin.eof()) break;
-//                    pipes.emplace_back(fin);
-//                }
             } else cout<<"ERROR:file isn't open!";
             fin.close();
             break;

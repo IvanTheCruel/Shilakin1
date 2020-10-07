@@ -70,7 +70,7 @@ void pipe::kill_sId(){
 }
 
 pipe::~pipe(){
-    std::cout<<"pipe id"<<id<<" is destructured"<<std::endl;
+    //std::cout<<"pipe id"<<id<<" is destructured"<<std::endl;
 }
 
 std::ostream& operator<<(std::ostream& os, const pipe& mypipe){
@@ -91,7 +91,7 @@ std::ofstream& operator<<(std::ofstream& ofs, const pipe& mypipe){
     string ans = "P" + to_string(mypipe.get_id())+"|"+to_string(mypipe.length)
             +"|"+to_string(mypipe.diameter)+"|"+a+"|\n";
     if(mypipe.get_id()==mypipe.get_max_id()-1){
-        ans = ans+"\pend";
+        ans = ans+"end";
     }
     ofs << ans;
     return ofs;

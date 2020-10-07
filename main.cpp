@@ -8,53 +8,44 @@ int main(){
 
     vector<pipe> pipes;
     vector<station> stations;
-    vector<string> q = {"1","2","3","4","5","6","7","0"};
-    vector<string> q2 = {"add pipe","add station","see all","edit pipe","edit station","save","load","exit"};
-    vector<string> temp = {"1","0"};
-    size_t id = 0; bool cnt = true;
-    string ans, tl;
-    ofstream fout;
 
-    ifstream fin;
 
-    cout<<"options: ";
-    for (size_t i = 0; i < q.size(); i++){
-        cout<<q[i]+'-'+q2[i]+", ";
-    }
-    cout<<endl;
 
-    //    double n = check_idiot("123");
-    //    cout << n;
 
-    while(cnt){
 
-        ans = check_idiot(q, "choose option");
 
-        switch(ans[0]){
-        case '0':
-            cnt = false;
+
+
+    while(1){
+
+        switch(menu()){
+        case 0:
+            return 0;
             break;
-        case '1':
+        case 1:
             pipes.emplace_back();
             break;
-        case '2':
+        case 2:
             stations.emplace_back();
             break;
-        case '3':
-            for (size_t i = 0; i < pipes.size(); i++) {
-                cout << pipes[i];
+        case 3:
+            for (auto p: pipes) {
+                cout << p;
             }
-            for (size_t i = 0; i < stations.size(); i++) {
-                cout << stations[i];
+            for (auto s: stations) {
+                cout << s;
             }
             break;
-        case '4':
-            id = check_idiot("enter ID");
+        case 4:
+        {
+            size_t id = check_idiot("enter ID");
             if(id > pipe::get_max_id()) cout<<"no pipe with such ID\n";
             else pipes[id].set();
             break;
-        case '5':
-            id = check_idiot("enter ID");
+        }
+        case 5:
+        {
+            size_t id = check_idiot("enter ID");
             if(id > station::get_max_id()) cout<<"no pipe with such ID\n";
             else if(check_ans("want to edit all parameters?"))
                 stations[id].set();
@@ -63,17 +54,25 @@ int main(){
             else
                 stations[id].off();
             break;
-        case '6':
+        }
+        case 6:
+        {
+            ofstream fout;
             fout.open("newbase.txt");
-            for (size_t i = 0; i < stations.size(); i++) {
-                fout << stations[i];
-            }
-            for (size_t i = 0; i < pipes.size(); i++) {
-                fout << pipes[i];
-            }
-            fout.close();
+            if (fout.is_open()){
+                for (size_t i = 0; i < stations.size(); i++) {
+                    fout << stations[i];
+                }
+                for (size_t i = 0; i < pipes.size(); i++) {
+                    fout << pipes[i];
+                }
+                fout.close();
+            } else cout<<"ERROR:file isn't open!";
             break;
-        case '7':
+        }
+        case 7:
+        {
+            ifstream fin;
             fin.open("newbase.txt");
             if (fin.is_open()){
                 char t;
@@ -94,6 +93,7 @@ int main(){
             } else cout<<"ERROR:file isn't open!";
             fin.close();
             break;
+        }
         }
     }
 

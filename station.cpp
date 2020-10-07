@@ -120,7 +120,7 @@ station::~station(){
 std::ostream& operator<<(std::ostream& os, const station& my_st){
 
     std::string temp = "is";
-    if (!my_st.me_in_work) temp = "not";
+    if (!my_st.me_in_work) temp += " not";
     os << "\nstation id" << my_st.get_id() << " 'called "+ my_st.name
        << "\n"+temp+" in work\nefficiency score:\t" << my_st.efficiency
        << "\nall stations count:\t" << my_st.quantity
@@ -130,11 +130,13 @@ std::ostream& operator<<(std::ostream& os, const station& my_st){
 
 std::ofstream& operator<<(std::ofstream& ofs, const station& my_st){
     using namespace std;
-    string a = ITC::yes[1]; //n
-    if (my_st.me_in_work) a = ITC::yes[0];
-    string ans = "S"+to_string(my_st.get_id())+"|"+my_st.name+"|"
-            +to_string(my_st.efficiency)+"|"+a+"|\n";
-    ofs << ans;
+
+    ofs <<  "S"
+            +to_string(my_st.get_id())+"|"
+            +my_st.name+"|"
+            +to_string(my_st.efficiency)+"|"
+            +(my_st.me_in_work ?  ITC::yes[0] : ITC::yes[1])+"|\n";
+
     return ofs;
 }
 

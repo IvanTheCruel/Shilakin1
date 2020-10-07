@@ -5,7 +5,7 @@ int pipe::sId = 0;
 
 pipe::pipe():id(sId++){
     length = 100;
-    diameter = 2.5;
+    diameter = 1400; //mm
 }
 
 

@@ -61,6 +61,18 @@ bool ITC::check_ans(std::string q){
     return tans;
 }
 
+int ITC::menu(){
+    vector<string> q = {"add pipe","add station","see all","edit pipe","edit station","save","load","exit"};
+    //vector<string> temp = {"1","0"};
+    cout<<"options: ";
+    for (size_t i = 0; i < q.size()-1; i++){
+        cout << i+1 << '-'+q[i]+", ";
+    }
+    cout<<"0-exit"<<endl;
+    return check_idiot("choose option");
+}
+
+
 //int ITC::max_row(std::string link){
 //    using namespace std;
 //    ifstream fin(link);

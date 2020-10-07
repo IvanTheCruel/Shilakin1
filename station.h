@@ -6,6 +6,7 @@ class ITC::station
 {
 private:
     static int sId;
+
     int id;
 public:
     std::string name;

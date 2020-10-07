@@ -2,22 +2,12 @@
 #include <station.h>
 #include <pipe.h>
 using namespace std;
+using namespace ITC;
 
 int main(){
-    using namespace ITC;
-
     vector<pipe> pipes;
     vector<station> stations;
-
-
-
-
-
-
-
-
     while(1){
-
         switch(menu()){
         case 0:
             return 0;
@@ -29,30 +19,23 @@ int main(){
             stations.emplace_back();
             break;
         case 3:
-            for (auto p: pipes) {
-                cout << p;
-            }
-            for (auto s: stations) {
-                cout << s;
-            }
+            for (auto s: stations) cout << s;
+            for (auto p: pipes)    cout << p;
             break;
         case 4:
         {
-            size_t id = check_idiot("enter ID");
-            if(id > pipe::get_max_id()) cout<<"no pipe with such ID\n";
-            else pipes[id].set();
+            size_t id = check_idiot("ID");
+            if(id > pipe::get_max_id()-1) cout<<"no pipe with such ID\n";
+            else
+                pipes[id].set();
             break;
         }
         case 5:
         {
-            size_t id = check_idiot("enter ID");
-            if(id > station::get_max_id()) cout<<"no pipe with such ID\n";
-            else if(check_ans("want to edit all parameters?"))
-                stations[id].set();
-            else if (check_ans("is station on?"))
-                stations[id].on();
+            size_t id = check_idiot("ID");
+            if(id > station::get_max_id()-1) cout<<"no station with such ID\n";
             else
-                stations[id].off();
+                stations[id].set();
             break;
         }
         case 6:
@@ -60,14 +43,11 @@ int main(){
             ofstream fout;
             fout.open("newbase.txt");
             if (fout.is_open()){
-                for (size_t i = 0; i < stations.size(); i++) {
-                    fout << stations[i];
-                }
-                for (size_t i = 0; i < pipes.size(); i++) {
-                    fout << pipes[i];
-                }
-                fout.close();
+                for (auto s: stations) fout << s;
+                for (auto p: pipes)    fout << p;
+
             } else cout<<"ERROR:file isn't open!";
+            fout.close();
             break;
         }
         case 7:
@@ -76,7 +56,6 @@ int main(){
             fin.open("newbase.txt");
             if (fin.is_open()){
                 char t;
-                string temp;
                 pipes.clear();
                 stations.clear();
                 pipe::kill_sId();
@@ -96,7 +75,6 @@ int main(){
         }
         }
     }
-
 
     return 0;
 }

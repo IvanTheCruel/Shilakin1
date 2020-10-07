@@ -62,13 +62,13 @@ bool ITC::check_ans(std::string q){
 }
 
 int ITC::menu(){
-    vector<string> q = {"add pipe","add station","see all","edit pipe","edit station","save","load","exit"};
-    //vector<string> temp = {"1","0"};
-    cout<<"options: ";
-    for (size_t i = 0; i < q.size()-1; i++){
-        cout << i+1 << '-'+q[i]+", ";
+    vector<string> q = {"1-add pipe","2-add station","3-see all","4-edit pipe","5-edit station","6-save","7-load","0-exit"};
+
+    cout << "options: ";
+    for (auto t: q){
+        cout << t << ", ";
     }
-    cout<<"0-exit"<<endl;
+    cout << endl;
     return check_idiot("choose option");
 }
 

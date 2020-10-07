@@ -1,42 +1,39 @@
 #include <station.h>
 using namespace ITC;
+using namespace std;
 
 int station::sId = 0;
-int station::quantity = 0;
-int station::quantity_in_work = 0;
+
 
 station::station():id(sId++){
-    name="basic_station_"+std::to_string(id);
+    name="basic_station_"+to_string(id);
     efficiency =  78.22;
-    quantity++;
+    quantity = 20;
+    quantity_in_work = 15;
     return;
 }
 
 station::station(bool change):station::station(){
     if (!change) return;
     else {
-        std::cout << "name station(no whitespaces)\n";
-
-        std::string temp;
-        std::cin>>temp;
-
-        name = temp;
+        cout << "name station(no whitespaces)\n";
+        cin >> name;
 
         efficiency = check_idiot("efficiency");
+        quantity = check_idiot("quantity of departments");
+        quantity_in_work = check_idiot("quantity of departments in work");
 
-        if (ITC::check_ans("if this station in work?")) {
-            quantity_in_work++;
-            me_in_work = true;
+        while(quantity < quantity_in_work) {
+            cout<<"ERROR: to many departments in work, please reenter\n";
+            quantity = check_idiot("quantity of departments");
+            quantity_in_work = check_idiot("quantity of departments in work");
         }
     }
     return;
 }
 
 station::station(std::ifstream& ifs):id(sId++){
-    using namespace std;
     string str;
-
-    quantity++;
 
     getline(ifs, str, '|');//взяли id
 
@@ -46,11 +43,10 @@ station::station(std::ifstream& ifs):id(sId++){
     efficiency=stod(str);
 
     getline(ifs, str, '|');
-    if (str == ITC::yes[0]) {
-        me_in_work=true;
-        quantity_in_work++;
-    }
-    else me_in_work=false;
+    quantity=stoi(str);
+
+    getline(ifs, str, '|');
+    quantity_in_work=stoi(str);
 
     return;
 }
@@ -66,50 +62,26 @@ int station::get_max_id(){
 
 void station::kill_sId(){
     station::sId = 0;
-    station::quantity=0;
-    station::quantity_in_work=0;
     return;
 }
 
 
 void station::set(){
-    std::cout << "name station(no whitespaces)\n";
+    cout << "name station(no whitespaces)\n";
 
-    std::string temp;
-    std::cin>>temp;
-
-    name = temp;
+    cin>>name;
 
     efficiency = check_idiot("efficiency");
-    bool tbool = ITC::check_ans("if this station in work?");
-    if (tbool && !me_in_work) {
-        quantity_in_work++;
-        me_in_work = true;
-    } else if (!tbool && me_in_work) {
-        quantity_in_work--;
-        me_in_work = false;
+    quantity = check_idiot("quantity of departments");
+    quantity_in_work = check_idiot("quantity of departments in work");
+    while(quantity < quantity_in_work) {
+        cout<<"ERROR: to many departments in work, please reenter\n";
+        quantity = check_idiot("quantity of departments");
+        quantity_in_work = check_idiot("quantity of departments in work");
     }
+
     return;
 }
-
-void station::on(){
-    if (!me_in_work) {
-        quantity_in_work++;
-        me_in_work = true;
-    }
-    std::cout << "station id" << id <<" is on now!\n";
-    return;
-}
-
-void station::off(){
-    if (me_in_work) {
-        quantity_in_work--;
-        me_in_work = false;
-    }
-    std::cout << "station id" << id <<" is off now!\n";
-    return;
-}
-
 
 
 station::~station(){
@@ -118,46 +90,41 @@ station::~station(){
 
 
 std::ostream& operator<<(std::ostream& os, const station& my_st){
-
-    std::string temp = "is";
-    if (!my_st.me_in_work) temp += " not";
-    os << "\nstation id" << my_st.get_id() << " 'called "+ my_st.name
-       << "\n"+temp+" in work\nefficiency score:\t" << my_st.efficiency
+    os << "\nstation id" << my_st.get_id()
+       << " 'called "+ my_st.name
+       << "\nefficiency score:\t" << my_st.efficiency
        << "\nall stations count:\t" << my_st.quantity
        << "\nstations in work:\t"<< my_st.quantity_in_work << "\n\n";
+
     return os;
 }
 
 std::ofstream& operator<<(std::ofstream& ofs, const station& my_st){
-    using namespace std;
-
     ofs <<  "S"
             +to_string(my_st.get_id())+"|"
             +my_st.name+"|"
             +to_string(my_st.efficiency)+"|"
-            +(my_st.me_in_work ?  ITC::yes[0] : ITC::yes[1])+"|\n";
+            << my_st.quantity << "|"
+            << my_st.quantity_in_work << "|\n";
 
     return ofs;
 }
 
 std::ifstream& operator>>(std::ifstream& ifs, ITC::station& my_st){
-    using namespace std;
     string str;
 
     getline(ifs, str, '|');//взяли id первого
 
     getline(ifs, my_st.name, '|');//дали имя
 
-    getline(ifs, str, '|');
+    getline(ifs, str, '|');//эффективность
     my_st.efficiency=stod(str);
 
-    getline(ifs, str, '|');
-    if (str == ITC::yes[0]) {
-        my_st.on();
-    } else {
-        my_st.off();
-    }
+    getline(ifs, str, '|');//кол-во станций
+    my_st.quantity=stoi(str);
 
-    //getline(ifs, str);
+    getline(ifs, str, '|');//кол-во станций в работе
+    my_st.quantity_in_work=stoi(str);
+
     return ifs;
 }

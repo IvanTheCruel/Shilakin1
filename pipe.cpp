@@ -1,5 +1,6 @@
 #include <pipe.h>
 using namespace ITC;
+using namespace std;
 
 int pipe::sId = 0;
 
@@ -14,9 +15,7 @@ pipe::pipe(bool change):pipe::pipe(){
     else {
         length=check_idiot("length");
         diameter=check_idiot("diameter");
-
         under_repair = ITC::check_ans("under repair?");
-
         return;
     }
 }
@@ -32,15 +31,13 @@ pipe::pipe(std::ifstream& ifs):id(sId++){
     length=stod(str);
 
     getline(ifs, str, '|');
-    diameter=stod(str);
+    diameter=stoi(str);
 
     getline(ifs, str, '|');
-    if (str == ITC::yes[0]) under_repair=true;
-    else under_repair=false;
+    under_repair=str=="1";
 
     return;
 }
-
 
 
 void pipe::set(){
@@ -71,25 +68,25 @@ pipe::~pipe(){
 }
 
 std::ostream& operator<<(std::ostream& os, const pipe& mypipe){
-
-    std::string temp = "is";
-    if (!mypipe.under_repair) temp = "not";
     os << "\npipe id" << mypipe.get_id()
-       << "\n"+temp+" under repair\nlength:\t\t" << mypipe.length
+       << "\n"<<(mypipe.under_repair ? "is":"is not")
+       << " under repair\nlength:\t\t" << mypipe.length
        << "\ndiameter:\t"<< mypipe.diameter << "\n\n";
+
     return os;
 }
 
 std::ofstream& operator<<(std::ofstream& ofs, const pipe& mypipe){
-    using namespace std;
+    string ans = "P"
+                + to_string(mypipe.get_id())+"|"
+                +to_string(mypipe.length)+"|"
+                +to_string(mypipe.diameter)+"|"
+                +(mypipe.under_repair? '1':'0')+"|\n";
 
-    string a = ITC::yes[1];
-    if (mypipe.under_repair) a = ITC::yes[0];
-    string ans = "P" + to_string(mypipe.get_id())+"|"+to_string(mypipe.length)
-            +"|"+to_string(mypipe.diameter)+"|"+a+"|\n";
     if(mypipe.get_id()==mypipe.get_max_id()-1){
         ans = ans+"end";
     }
+
     ofs << ans;
     return ofs;
 }

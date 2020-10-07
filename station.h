@@ -10,18 +10,16 @@ private:
     int id;
 public:
     std::string name;
-    static int quantity;
-    static int quantity_in_work;
+    int quantity;
+    int quantity_in_work;
     double efficiency;
-    //bool under_repair = false;
-    bool me_in_work = false;
 
     int get_id() const;
+
     static int get_max_id();
     static void kill_sId();
     void set();
-    void on();
-    void off();
+
 
     station();
     station(bool);
